@@ -1,0 +1,128 @@
+*{
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+    
+}
+
+nav{
+    height: 30px;
+    background-color: #ab15d4;
+    display: flex;
+    align-items: center;
+}
+#loadmore{
+    padding-top:10px ;
+    height: 30px;
+    background-color: #ab15d4;
+    text-align: center;
+}
+
+.nav-element{
+    cursor: pointer;
+    height: 75%;
+    color: #8ECAE6;
+    text-align: center;
+    flex: 1;
+}
+
+.nav-element:hover{
+    border-radius: 10px;
+    background-color: #6e0b89;
+}
+
+.users-container{
+    display: flex;
+    flex-wrap: wrap;
+    
+}
+@keyframes scalein {
+    from {
+      scale: 40%;
+    }
+  
+    to {
+      scale: 100%;
+    }
+  }
+
+
+
+.user{
+    padding-top: 20px;
+    text-align: center;
+    width: 30%;
+    flex-grow: 1;
+    margin: 2px;
+    margin-top: 5px;
+    animation-duration: 1.5s;
+    animation-name: scalein;
+    border-radius: 10px;
+    background-color: #219EBC;
+    cursor: pointer;
+    border: 1px solid black;
+    height: 120px;
+}
+
+.userfullinfo{
+    padding-top: 10px;
+    animation-duration: 1.5s;
+    animation-name: scalein;
+    border-radius: 10px;
+    background-color: #219EBC;
+    padding-left: 10px;
+    margin: 5px;
+    border: 1px solid black;
+    margin-left: 12.5%;
+    width: 75%;
+}
+.userfullinfo ul{
+    padding-top: 20px;
+    padding-bottom: 40px;
+}
+
+.user:hover{
+    box-shadow: 5px 5px #043c4aa9;
+}
+
+.user:active{
+    box-shadow: 5px 5px #1cb9e0ad;
+}
+
+li{
+    cursor: pointer;
+}
+li:active{
+    
+    color: aquamarine;
+}
+.author{
+    text-decoration: underline;
+    font-size: 20px;
+    color: rgb(145, 18, 143);
+    cursor: pointer;
+}
+.news{
+    animation-duration: 1.5s;
+    animation-name: scalein;
+
+    border-radius: 10px;
+    background-color: #219EBC;
+    cursor: pointer;
+    padding: 4px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    width: 100%;
+    border: 1px solid black;
+}
+.news:hover{
+    
+    box-shadow: 5px 5px #043c4aa9;
+}
+
+.news:active{
+    box-shadow: 5px 5px #1cb9e0ad;
+}
+
+body{
+    background-color: #8ECAE6;
+}
