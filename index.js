@@ -1,4 +1,3 @@
-// JavaScript (script.js)
 const url = "https://jsonplaceholder.typicode.com/users";
 const usersDOM = $('#users-container');
 let newscounter = 0;
@@ -10,11 +9,11 @@ const load = async () => {
   usersDOM.empty();
 
   try {
-    const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    const users = await response.json();
+    const users = await $.ajax({
+      url: url,
+      method: 'GET',
+    });
+
     users.forEach((element) => {
       const user = $('<div></div>').addClass('user').html(`
         <p>Name: ${element.name}</p>
@@ -33,8 +32,10 @@ const load = async () => {
 
 const loadUserPosts = async (userId) => {
   try {
-    const response = await fetch('https://jsonplaceholder.typicode.com/posts');
-    const posts = await response.json();
+    const posts = await $.ajax({
+      url: 'https://jsonplaceholder.typicode.com/posts',
+      method: 'GET',
+    });
 
     const userPosts = posts.filter(post => post.userId === userId);
 
@@ -47,7 +48,6 @@ const loadUserPosts = async (userId) => {
       });
       userPostsUl.append(li);
     });
-
   } catch (error) {
     console.error('Error fetching data:', error);
   }
@@ -57,11 +57,10 @@ const loadUserData = async (id) => {
   usersDOM.empty();
 
   try {
-    const response = await fetch(url + '/' + id);
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    const user = await response.json();
+    const user = await $.ajax({
+      url: `${url}/${id}`,
+      method: 'GET',
+    });
 
     const userDiv = $('<div></div>').addClass('userfullinfo').html(`
       <p><strong>Name:</strong> ${user.name}</p>
@@ -85,31 +84,41 @@ const loadUserData = async (id) => {
 const LoadComents = async (userId) => {
   loadmore.prop('hidden', true);
 
-  const response = await fetch('https://jsonplaceholder.typicode.com/comments');
-  const comments = await response.json();
+  try {
+    const comments = await $.ajax({
+      url: 'https://jsonplaceholder.typicode.com/comments',
+      method: 'GET',
+    });
 
-  const Post = await fetch(`https://jsonplaceholder.typicode.com/posts/${userId}`);
-  const PostInfo = await Post.json();
+    const post = await $.ajax({
+      url: `https://jsonplaceholder.typicode.com/posts/${userId}`,
+      method: 'GET',
+    });
 
-  const User = await fetch(`https://jsonplaceholder.typicode.com/users/${userId}`);
-  const UserInfo = await User.json();
+    const userInfo = await $.ajax({
+      url: `https://jsonplaceholder.typicode.com/users/${userId}`,
+      method: 'GET',
+    });
 
-  usersDOM.empty();
+    usersDOM.empty();
 
-  const userComments = comments.filter(comment => comment.postId === userId);
+    const userComments = comments.filter(comment => comment.postId === userId);
 
-  const ComentsDiv = $('<div></div>').addClass('userfullinfo').html(`
-    <p class="author" onclick="loadUserData(${userId})">Name : ${UserInfo.name}</p>
-    <p>Title : ${PostInfo.title}</p>
-    <p>Body : ${PostInfo.body}</p>
-  `);
+    const ComentsDiv = $('<div></div>').addClass('userfullinfo').html(`
+      <p class="author" onclick="loadUserData(${userId})">Name : ${userInfo.name}</p>
+      <p>Title : ${post.title}</p>
+      <p>Body : ${post.body}</p>
+    `);
 
-  userComments.forEach(comment => {
-    const p = $('<p></p>').text(comment.body);
-    ComentsDiv.append(p);
-  });
+    userComments.forEach(comment => {
+      const p = $('<p></p>').text(comment.body);
+      ComentsDiv.append(p);
+    });
 
-  usersDOM.append(ComentsDiv);
+    usersDOM.append(ComentsDiv);
+  } catch (error) {
+    console.error('Fetch error:', error);
+  }
 };
 
 const shuffleArray = (array) => {
@@ -121,11 +130,18 @@ const shuffleArray = (array) => {
 };
 
 const NewsLoad = async () => {
-  const ResponsePosts = await fetch('https://jsonplaceholder.typicode.com/posts');
-  const Posts = await ResponsePosts.json();
+  try {
+    const posts = await $.ajax({
+      url: 'https://jsonplaceholder.typicode.com/posts',
+      method: 'GET',
+    });
 
-  const shuffledPosts = shuffleArray(Posts);
-  return shuffledPosts;
+    const shuffledPosts = shuffleArray(posts);
+    return shuffledPosts;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    return [];
+  }
 };
 
 const NewsDisplay = async () => {
